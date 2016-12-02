@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient("compute-service")
 public interface ComputeClient {
 
-	@RequestMapping(method = RequestMethod.GET, value = "/add")
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	Integer add(@RequestParam(value = "a") Integer a, @RequestParam(value = "b") Integer b);
 
 }
