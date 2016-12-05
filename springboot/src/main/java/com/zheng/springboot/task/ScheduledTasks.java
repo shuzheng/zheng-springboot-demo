@@ -3,6 +3,7 @@ package com.zheng.springboot.task;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,7 +20,7 @@ public class ScheduledTasks {
 		System.out.println("当前时间：" + dateFormat.format(new Date()));
 	}
 
-	@Scheduled(cron = "0/2 * * * * ?")
+	@Scheduled(cron = "0 0/5 * * * ?")
 	public void test() {
 		System.out.println("test");
 	}
