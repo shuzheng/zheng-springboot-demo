@@ -1,14 +1,17 @@
 package com.zheng.springboot.web;
 
 import com.zheng.springboot.domain.User;
+import com.zheng.springboot.exception.MyException;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +51,37 @@ public class HelloController {
 		// 保存字符串
 		stringRedisTemplate.opsForValue().set("aaa", "111");
 		return stringRedisTemplate.opsForValue().get("aaa");
+	}
+
+	@ApiOperation(value="错误页面1")
+	@RequestMapping(value = "/error1", method = RequestMethod.GET)
+	public String error1() throws Exception {
+		throw new Exception("发生错误");
+	}
+
+	@ApiOperation(value="错误页面2")
+	@RequestMapping(value = "/error2", method = RequestMethod.GET)
+	public String error2() throws MyException {
+		throw new MyException("发生错误");
+	}
+
+
+	@Value("${app.description}")
+	private String appDescription;
+	@ApiOperation(value="appDescription")
+	@RequestMapping(value = "/appDescription", method = RequestMethod.GET)
+	@ResponseBody
+	public String appDescription() throws MyException {
+		return appDescription;
+	}
+
+	@Value("${profile.env}")
+	private String env;
+	@ApiOperation(value="env")
+	@RequestMapping(value = "/env", method = RequestMethod.GET)
+	@ResponseBody
+	public String env() throws MyException {
+		return env;
 	}
 
 }
