@@ -27,14 +27,14 @@ public class HelloController {
 
 	@ApiOperation(value="测试首页", notes="测试首页get请求")
 	@ApiImplicitParam(name = "map", value = "ModelMap实体map", required = false, dataType = "ModelMap")
-	@RequestMapping(value = "/hello", method = RequestMethod.GET)
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index(ModelMap map) {
 		map.addAttribute("host", "http://www.zhangshuzheng.cn");
 		List<User> users = new ArrayList<>();
 		User user = new User();
-		user.setId(null);
+		user.setId(1l);
 		user.setAge(11);
-		user.setName("");
+		user.setName("zhangsan");
 		users.add(user);
 		user = new User();
 		user.setId(2l);
@@ -43,6 +43,18 @@ public class HelloController {
 		users.add(user);
 		map.addAttribute("users", users);
 		return "/index";
+	}
+
+	@RequestMapping("/hello")
+	@ResponseBody
+	public String hello() throws MyException {
+		return "hello";
+	}
+
+	@RequestMapping("/login")
+	@ResponseBody
+	public String login() {
+		return "login";
 	}
 
 	@ApiOperation(value="Redis首页")
