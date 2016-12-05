@@ -2,6 +2,8 @@ package com.zheng.springboot.service;
 
 import com.zheng.springboot.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Created by ZhangShuzheng on 2016/11/17.
@@ -12,6 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	User findByNameAndAge(String name, Integer age);
 
-//	@Query("from user u where u.name=:name")
-//	User findUser(@Param("name") String name);
+	@Query("from User u where u.name=:name")
+	User findUser(@Param("name") String name);
 }
