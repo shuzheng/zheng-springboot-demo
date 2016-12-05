@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by ZhangShuzheng on 2016/11/17.
  */
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
