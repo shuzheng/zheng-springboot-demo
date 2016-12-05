@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -96,4 +98,18 @@ public class HelloController {
 		return env;
 	}
 
+
+	@Autowired
+	private JavaMailSender mailSender;
+	@RequestMapping(value = "/mail", method = RequestMethod.GET)
+	@ResponseBody
+	public String mail() throws MyException {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("xxx@163.com");
+		message.setTo("xxx@163.com");
+		message.setSubject("主题：简单邮件");
+		message.setText("测试邮件内容");
+		mailSender.send(message);
+		return "success";
+	}
 }
