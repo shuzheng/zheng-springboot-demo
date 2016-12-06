@@ -18,7 +18,7 @@ public interface UserMapper {
 	})
 	@Select("SELECT name, age FROM user")
 	List<User> findAll();
-	
+
 	@Select("SELECT * FROM USER WHERE NAME = #{name}")
 	User findByName(@Param("name") String name);
 
