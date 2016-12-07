@@ -2,6 +2,7 @@ package com.zheng.springboot.web;
 
 import com.zheng.springboot.domain.User;
 import com.zheng.springboot.exception.MyException;
+import com.zheng.springboot.rabbitmq.Sender;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ public class HelloController {
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
 
+	/**
+	 * 首页
+	 * @param map
+	 * @return
+	 */
 	@ApiOperation(value="测试首页", notes="测试首页get请求")
 	@ApiImplicitParam(name = "map", value = "ModelMap实体map", required = false, dataType = "ModelMap")
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -47,18 +53,26 @@ public class HelloController {
 		return "/index";
 	}
 
+	/**
+	 * Spring Securety
+	 * @return
+	 * @throws MyException
+	 */
 	@RequestMapping("/hello")
 	@ResponseBody
 	public String hello() throws MyException {
 		return "hello";
 	}
-
 	@RequestMapping("/login")
 	@ResponseBody
 	public String login() {
 		return "login";
 	}
 
+	/**
+	 * Redis
+	 * @return
+	 */
 	@ApiOperation(value="Redis首页")
 	@RequestMapping(value = "/redis", method = RequestMethod.GET)
 	public String redis() {
@@ -67,20 +81,26 @@ public class HelloController {
 		return stringRedisTemplate.opsForValue().get("aaa");
 	}
 
+	/**
+	 * 统一异常处理
+	 * @return
+	 * @throws Exception
+	 */
 	@ApiOperation(value="错误页面1")
 	@RequestMapping(value = "/error1", method = RequestMethod.GET)
 	public String error1() throws Exception {
 		throw new Exception("发生错误");
 	}
-
 	@ApiOperation(value="错误页面2")
 	@RequestMapping(value = "/error2", method = RequestMethod.GET)
 	public String error2() throws MyException {
 		throw new MyException("发生错误");
 	}
 
-
-	@Value("${app.description}")
+	/**
+	 * 读取配置文件
+	 */
+	@Value("${spring.application.description}")
 	private String appDescription;
 	@ApiOperation(value="appDescription")
 	@RequestMapping(value = "/appDescription", method = RequestMethod.GET)
@@ -89,6 +109,9 @@ public class HelloController {
 		return appDescription;
 	}
 
+	/**
+	 * 获取环境
+	 */
 	@Value("${profile.env}")
 	private String env;
 	@ApiOperation(value="env")
@@ -98,7 +121,9 @@ public class HelloController {
 		return env;
 	}
 
-
+	/**
+	 * 发送邮件
+	 */
 	@Autowired
 	private JavaMailSender mailSender;
 	@RequestMapping(value = "/mail", method = RequestMethod.GET)
@@ -112,4 +137,17 @@ public class HelloController {
 		mailSender.send(message);
 		return "success";
 	}
+
+	/**
+	 * RabbitMQ
+	 */
+	@Autowired
+	private Sender sender;
+	@RequestMapping(value = "/mq", method = RequestMethod.GET)
+	@ResponseBody
+	public String mq() throws MyException {
+		sender.send();
+		return "success";
+	}
+
 }
