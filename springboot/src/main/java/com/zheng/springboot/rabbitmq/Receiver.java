@@ -13,7 +13,12 @@ public class Receiver {
 
 	@RabbitHandler
 	public void process(String hello) {
-		System.out.println("Receiver : " + hello);
+		if (hello.equals("message1")) {
+			System.out.println("消费开始时间：" + System.currentTimeMillis());
+		}
+		if (hello.equals("message100000")) {
+			System.out.println("消费结束时间：" + System.currentTimeMillis());
+		}
 	}
 
 }
