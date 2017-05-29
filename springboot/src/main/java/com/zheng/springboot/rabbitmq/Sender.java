@@ -4,8 +4,6 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 /**
  * Created by ZhangShuzheng on 2016/12/7.
  */
@@ -16,9 +14,12 @@ public class Sender {
 	private AmqpTemplate rabbitTemplate;
 
 	public void send() {
-		String context = "hello " + new Date();
-		System.out.println("Sender : " + context);
-		this.rabbitTemplate.convertAndSend("hello", context);
+		long time = System.currentTimeMillis();
+		System.out.println("生产开始时间：" + time);
+		for (int i = 1; i <= 100000; i ++) {
+			this.rabbitTemplate.convertAndSend("hello", "message" + i);
+		}
+		System.out.println("生产结束时间：{}" + (System.currentTimeMillis() - time));
 	}
 
 }
