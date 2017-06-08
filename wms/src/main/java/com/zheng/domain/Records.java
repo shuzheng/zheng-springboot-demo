@@ -1,11 +1,12 @@
 package com.zheng.domain;
 
+@Entity
 public class Records {
-  private Long id;
-  private Long productid;
-  private Long count;
-  private Long userid;
-  private java.sql.Timestamp ctime;
+  @Id @GeneratedValue private Long id;
+  @Column private Long productid;
+  @Column private Long count;
+  @Column private Long userid;
+  @Column private java.sql.Timestamp ctime;
 
   public Long getId() {
     return id;
