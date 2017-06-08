@@ -1,9 +1,10 @@
 package com.zheng.domain;
 
+@Entity
 public class Inventory {
-  private Long id;
-  private String name;
-  private Long count;
+  @Id @GeneratedValue private Long id;
+  @Column private String name;
+  @Column private Long count;
 
   public Long getId() {
     return id;
